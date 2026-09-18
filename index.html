@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>V-Phone</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: rgb(65, 88, 85);
+      color: #333;
+      padding-left: 200px;
+      overflow-x: hidden;
+      transition: padding 0.3s ease;
+    }
+
+    a {
+      text-decoration: none;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 180px;
+      height: 100vh;
+      background-color: #9fadab;
+      padding: 20px 10px;
+      z-index: 1000;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: stretch;
+      gap: 10px;
+    }
+
+    .brand {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      padding-left: 12px;
+    }
+
+    .brand-name,
+    .home-link {
+      font-size: 16px;
+      font-weight: bold;
+      color: #333;
+      text-decoration: none;
+      line-height: 1.5;
+      padding: 8px 0;
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      padding-left: 12px;
+    }
+
+    nav a {
+      text-decoration: none;
+      color: #333;
+      padding: 8px 0;
+      border-radius: 5px;
+      transition: background 0.3s ease;
+      display: block;
+    }
+
+    nav a:hover,
+    nav a.active {
+      background: rgba(0, 0, 0, 0.1);
+      color: rgba(0, 76, 255, 0.842);
+      font-weight: bold;
+    }
+
+    .page-section {
+      min-height: 100vh;
+      padding: 30px 40px 40px 40px;
+    }
+
+    .slider-container {
+      max-width: 80vw;
+      width: 100%;
+      margin: 0 auto;
+      padding: 20px 40px;
+      border-radius: 20px;
+      overflow: hidden;
+      background: linear-gradient(to bottom, #9fadab, #adc3afeb);
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .slides {
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.6s ease-in-out;
+      will-change: transform;
+      height: 100%;
+    }
+
+    .slides-wrapper {
+      height: 600px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .slide {
+      height: 600px;
+      flex-shrink: 0;
+      background-color: transparent;
+      border-radius: 12px;
+      padding: 20px;
+      box-sizing: border-box;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 20px;
+      box-shadow: none;
+      backface-visibility: hidden;
+      transform-style: preserve-3d;
+    }
+
+    .slide img {
+      height: 300px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    }
+
+    .caption {
+      text-align: center;
+      max-width: 700px;
+      color: white;
+      padding: 0 20px;
+    }
+
+    .caption h2 {
+      font-size: 2.5rem;
+      color: gold;
+      margin-bottom: 10px;
+      text-shadow: 1px 1px 5px rgba(0,0,0,0.6);
+    }
+
+    .caption p {
+      font-size: 1.2rem;
+      line-height: 1.5;
+      text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+      margin-bottom: 8px;
+    }
+
+    .discount {
+      background: #2d5a47;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1.3rem;
+      padding: 8px 18px;
+      border-radius: 20px;
+      margin: 0 auto 20px auto;
+      display: inline-block;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: center;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      background-color: #6f806f;
+      color: white;
+      padding: 14px 36px;
+      border-radius: 28px;
+      font-size: 18px;
+      cursor: pointer;
+      border: none;
+      font-weight: 600;
+      transition: background 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn:hover {
+      background-color: #2d5a47;
+    }
+
+    .arrow {
+      font-size: 36px;
+      background-color: #f0f0f0cc;
+      border-radius: 50%;
+      width: 50px;
+      height: 50px;
+      border: none;
+      cursor: pointer;
+      color: black;
+      position: absolute;
+      right: 50px;
+      top: 50%;
+      transform: translateY(-50%);
+      transition: background-color 0.3s ease;
+      z-index: 10;
+    }
+
+    .arrow:hover {
+      background-color: #c3cecd;
+    }
+
+    .arrow.up {
+      top: calc(50% - 40px);
+    }
+
+    .arrow.down {
+      top: calc(50% + 40px);
+    }
+
+    .header {
+      text-align: center;
+      margin: 30px 0 10px;
+    }
+
+    .header h2 {
+      color: gold;
+    }
+
+    .header p {
+      color: #f0f0f0;
+    }
+
+    .filter {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 20px 0;
+    }
+
+    .filter span {
+      background: #e0e0e0;
+      color: #333;
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: none;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .filter span:hover {
+      background: #c2c2c2;
+    }
+
+    .list-produk {
+      display: flex;
+      justify-content: center;
+      padding-bottom: 40px;
+    }
+
+    .list-produk-vertical {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+      width: 100%;
+      max-width: 1000px;
+      padding: 0 20px;
+      max-height: 550px;
+      overflow-y: auto;
+      scroll-behavior: smooth;
+    }
+
+    .product-card {
+      background: #ffffff;
+      color: #333;
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+      margin-bottom: 10px;
+      border-radius: 8px;
+    }
+
+    .product-card h3 {
+      margin: 10px 0 5px;
+      font-size: 18px;
+    }
+
+    .product-card p {
+      margin: 0;
+      font-weight: bold;
+      color: #2b5a3d;
+      font-size: 16px;
+    }
+
+    .promosi-header {
+      text-align: center;
+      padding: 30px 20px;
+      background-color: #e0ece9;
+      border-radius: 10px;
+      margin: 20px auto;
+      max-width: 1100px;
+      word-wrap: break-word;
+      overflow-wrap: break-word;
+    }
+
+    .promosi-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 30px;
+      padding: 20px;
+      margin: 0 auto;
+      max-width: 1180px;
+    }
+
+    .promo-card {
+      background-color: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      padding: 20px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .promo-card:hover {
+      transform: scale(1.03);
+    }
+
+    .promo-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 10px;
+      margin-bottom: 15px;
+    }
+
+    .promo-card img.fit-contain {
+      object-fit: contain;
+      background-color: #f8f8f8;
+    }
+
+    .promo-card h2 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      color: #2c3e50;
+    }
+
+    .promo-card p {
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 15px;
+    }
+
+    .promo-card button {
+      background-color: #4a7c59;
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background-color 0.2s ease;
+    }
+
+    .promo-card button:hover {
+      background-color: #365c42;
+    }
+
+    .promo-text {
+      min-height: 120px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      overflow-wrap: break-word;
+    }
+
+    .tentang-kami {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    .text-with-images {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 100px;
+      margin: 10px auto;
+      flex-wrap: nowrap;
+      color: #f2f2f2;
+      padding: 20px;
+      max-width: 1200px;
+    }
+
+    .side-image {
+      width: 200px;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 20px;
+      max-width: 100%;
+    }
+
+    .main-text {
+      max-width: 600px;
+      text-align: center;
+      padding: 0 10px;
+    }
+
+    .tentang-kami h1 {
+      margin: 20px 0 10px;
+      font-size: 28px;
+    }
+
+    .tentang-kami p {
+      margin-bottom: 20px;
+    }
+
+    .grid-box {
+      display: flex;
+      gap: 20px;
+      margin-bottom: 30px;
+      text-align: center;
+      flex-wrap: wrap;
+    }
+
+    .card {
+      background-color: #adc3afeb;
+      padding: 15px;
+      border-radius: 8px;
+      flex: 1;
+      min-width: 250px;
+    }
+
+    .pendekatan,
+    .kontak-box {
+      background-color: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .pendekatan-item,
+    .sejarah-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 3%;
+      flex-wrap: wrap;
+      margin: 30px 0;
+    }
+
+    .pendekatan-gambar,
+    .sejarah-gambar {
+      width: 240px;
+      height: auto;
+      object-fit: contain;
+      flex-shrink: 0;
+      max-width: 100%;
+      margin-bottom: 10px;
+    }
+
+    .pendekatan-teks,
+    .sejarah-teks {
+      flex: 1;
+      padding: 0 10px;
+    }
+
+    .kontak-box {
+      background-color: #9fadab;
+      border-radius: 12px;
+      padding: 20px 15px;
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .kontak {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 100px;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .kontak div {
+      min-width: 200px;
+    }
+
+    .kontak h4 {
+      margin-bottom: 5px;
+      font-size: 16px;
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      width: 350px;
+      max-width: 100%;
+      margin: 40px auto;
+    }
+
+    .container h2 {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 25px;
+      position: relative;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      margin-bottom: 5px;
+    }
+
+    .input-wrapper {
+      position: relative;
+    }
+
+    .autocomplete-popup {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background: white;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      padding: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-sizing: border-box;
+      z-index: 100;
+      display: none;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px;
+      box-sizing: border-box;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .gender-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-top: 5px;
+    }
+
+    .gender-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .gender-group label {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .gender-group input[type="radio"] {
+      margin: 0;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 12px;
+      background-color: #1d3d3d;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+      margin-top: 5px;
+      cursor: pointer;
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 10px;
+    }
+
+    .login-link a {
+      color: #00f;
+      text-decoration: underline;
+      text-decoration-color: rgba(0, 76, 255, 0.842);
+    }
+
+    .error {
+      color: red;
+      font-size: 13px;
+      margin-top: 4px;
+    }
+
+    #popup-nama {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: #ffe6e6;
+      border: 1px solid #ff4d4d;
+      border-radius: 5px;
+      padding: 6px 10px;
+      font-size: 13px;
+      color: #cc0000;
+      box-shadow: 0 2px 8px rgba(204, 0, 0, 0.25);
+      box-sizing: border-box;
+      margin-top: 5px;
+      display: none;
+      z-index: 200;
+    }
+
+    @media (max-width: 768px) {
+      body {
+        padding-left: 0;
+        padding-top: 280px;
+      }
+
+      .navbar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        flex-direction: column;
+        align-items: center;
+        padding: 15px 10px;
+      }
+
+      .brand {
+        flex-direction: row;
+        justify-content: center;
+        width: 100%;
+        gap: 12px;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        gap: 10px;
+      }
+
+      nav a {
+        width: 100%;
+        text-align: center;
+        background-color: #c3cecd;
+        padding: 10px;
+      }
+
+      .slider-container {
+        width: 100vw;
+        padding: 10px 10px;
+        border-radius: 0;
+      }
+
+      .slides-wrapper {
+        height: auto;
+        max-height: 100vh;
+      }
+
+      .product-card {
+        margin: 0 auto;
+        width: 100%;
+      }
+
+      .list-produk-vertical {
+        max-height: none;
+      }
+
+      .promosi-header {
+        font-size: 16px;
+        padding: 20px;
+        margin-top: 110px;
+      }
+
+      .promosi-grid {
+        flex-direction: column;
+        align-items: center;
+        padding: 10px;
+      }
+
+      .promo-card {
+        width: 90%;
+      }
+
+      .kontak {
+        flex-direction: column;
+        gap: 20px;
+        text-align: center;
+      }
+
+      .text-with-images {
+        flex-direction: column;
+        gap: 20px;
+        padding: 10px;
+        text-align: center;
+      }
+
+      .grid-box {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .pendekatan-item,
+      .sejarah-item {
+        flex-direction: column;
+        text-align: center;
+      }
+    }
+
+    @media (max-width: 400px) {
+      .container {
+        width: 100%;
+        padding: 20px;
+      }
+
+      .gender-group {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header class="navbar">
+    <div class="brand">
+      <a href="#home" class="home-link">Home</a>
+      <span class="brand-name">V-Phone</span>
+    </div>
+    <nav>
+      <ul>
+        <li><a href="#home" class="active">Home</a></li>
+        <li><a href="#produk">Produk</a></li>
+        <li><a href="#promosi">Promosi</a></li>
+        <li><a href="#tentang-kami">Tentang Kami</a></li>
+        <li><a href="#registrasi">Ganti Akun</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <section id="home" class="page-section">
+      <div class="slider-container">
+        <button class="arrow up" aria-label="Previous Slide">&#9650;</button>
+
+        <div class="slides-wrapper">
+          <div class="slides">
+            <div class="slide">
+              <img src="Assets/Images/Huawei_mate-removebg-preview.png" alt="V-Phone Mate Pro X Ultimate" />
+              <div class="caption">
+                <h2>V-PHONE MATE PRO X ULTIMATE</h2>
+                <p>HANDPHONE INOVASI TERBAIK 2025</p>
+                <p class="discount">Hemat hingga Rp15 juta</p>
+                <div class="buttons">
+                  <a href="#produk" class="btn">Pelajari Lebih Lanjut</a>
+                  <button class="btn" type="button">Beli Sekarang</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="Assets/Images/ZFOLD5-removebg-preview (1).png" alt="V-PHONE FOLD Z" />
+              <div class="caption">
+                <h2>V-PHONE FOLD Z</h2>
+                <p>HANDPHONE DENGAN KECANGGIHAN AI</p>
+                <p class="discount">Dapatkan hadiah hingga Rp 3.000.000</p>
+                <div class="buttons">
+                  <a href="#produk" class="btn">Pelajari Lebih Lanjut</a>
+                  <button class="btn" type="button">Beli Sekarang</button>
+                </div>
+              </div>
+            </div>
+
+            <div class="slide">
+              <img src="Assets/Images/Iphone_16_promax-removebg-preview.png" alt="V-PHONE PROMAX" />
+              <div class="caption">
+                <h2>V-PHONE PROMAX</h2>
+                <p>KAMERA YANG SANGAT MEMPESONA DENGAN DESAIN STYLISH</p>
+                <p class="discount">Diskon Hingga Rp 3.999.000</p>
+                <div class="buttons">
+                  <a href="#produk" class="btn">Pelajari Lebih Lanjut</a>
+                  <button class="btn" type="button">Beli Sekarang</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="arrow down" aria-label="Next Slide">&#9660;</button>
+      </div>
+    </section>
+
+    <section id="produk" class="page-section">
+      <div class="header">
+        <h2>V-Phone</h2>
+        <p>Segala kebutuhan handphone terpenuhi hanya di V-Phone</p>
+      </div>
+
+      <div class="filter">
+        <span>Gaming</span>
+        <span>Kamera</span>
+        <span>Budget</span>
+      </div>
+
+      <section class="list-produk">
+        <div class="list-produk-vertical">
+          <div class="product-card">
+            <img src="Assets/Images/M54_5G_samsung-removebg-preview.png" alt="V-Phone ER7" />
+            <h3>V-Phone ER7</h3>
+            <p>Rp 6.359.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/evercross-removebg-preview.png" alt="V-Phone 20" />
+            <h3>V-Phone 20</h3>
+            <p>Rp 8.199.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/IP15-removebg-preview.png" alt="V-Phone Lite" />
+            <h3>V-Phone Lite</h3>
+            <p>Rp 5.599.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/xiapmii-removebg-preview.png" alt="V-Phone Max X" />
+            <h3>V-Phone Max X</h3>
+            <p>Rp 9.499.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/A15-removebg-preview.png" alt="V-Phone Pro 8" />
+            <h3>V-Phone Pro 8</h3>
+            <p>Rp 10.299.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Redmi_12-removebg-preview.png" alt="V-Phone Kamera X" />
+            <h3>V-Phone Kamera X</h3>
+            <p>Rp 7.750.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Huawei_mate-removebg-preview.png" alt="V-Phone Gaming Ultimate Z" />
+            <h3>V-Phone Gaming Ultimate Z</h3>
+            <p>Rp 30.299.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Vivoy71-removebg-preview.png" alt="V-Phone Air" />
+            <h3>V-Phone Air</h3>
+            <p>Rp 14.999.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Vivo_y100_5g-removebg-preview.png" alt="V-Phone Note" />
+            <h3>V-Phone Note</h3>
+            <p>Rp 6.999.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Iphone_16_promax-removebg-preview.png" alt="V-Phone Y7" />
+            <h3>V-Phone Y7</h3>
+            <p>Rp 3.999.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Roggg-removebg-preview.png" alt="V-Phone Prime" />
+            <h3>V-Phone Prime</h3>
+            <p>Rp 25.250.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/ZFOLD5-removebg-preview (1).png" alt="V-Phone Nova" />
+            <h3>V-Phone Nova</h3>
+            <p>Rp 16.890.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Zfold5-removebg-preview.png" alt="V-Phone Z-Pro" />
+            <h3>V-Phone Z-Pro</h3>
+            <p>Rp 19.999.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/Y30-removebg-preview.png" alt="V-Phone T MAX" />
+            <h3>V-Phone T MAX</h3>
+            <p>Rp 10.999.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+
+          <div class="product-card">
+            <img src="Assets/Images/RealmeC51-removebg-preview.png" alt="V-Phone Rex" />
+            <h3>V-Phone Rex</h3>
+            <p>Rp 19.999.000</p>
+            <button class="btn" type="button">Beli sekarang</button>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section id="promosi" class="page-section">
+      <div class="main-content">
+        <main>
+          <section class="promosi-header">
+            <h1>Penawaran Spesial hanya dari V-Phone !</h1>
+            <p>Temukan berbagai diskon dan promo menarik untuk smartphone favoritmu.</p>
+          </section>
+
+          <section class="promosi-grid">
+            <div class="promo-card">
+              <img src="Assets/Images/30_discount-removebg-preview.png" alt="Promo 1" class="fit-contain" />
+              <div class="promo-text">
+                <h2>Diskon 30% untuk semua produk Samsung</h2>
+                <p>Dapatkan produk Samsung dengan potongan harga spesial selama bulan ini!</p>
+              </div>
+              <button type="button">Dapatkan Sekarang</button>
+            </div>
+
+            <div class="promo-card">
+              <img src="Assets/Images/Gratisongkir-removebg-preview.png" alt="Promo 2" class="fit-contain" />
+              <div class="promo-text">
+                <h2>Gratis Ongkir Seluruh Indonesia</h2>
+                <p>Belanja dari mana saja tanpa biaya kirim. Berlaku untuk semua produk!</p>
+              </div>
+              <button type="button">Cek Detail</button>
+            </div>
+
+            <div class="promo-card">
+              <img src="Assets/Images/Headsetpromosi-removebg-preview.png" alt="Promo 3" class="fit-contain" />
+              <div class="promo-text">
+                <h2>Beli 1 Gratis 1 Aksesoris</h2>
+                <p>Beli smartphone apapun dan dapatkan gratis aksesoris pilihan!</p>
+              </div>
+              <button type="button">Lihat Promo</button>
+            </div>
+
+            <div class="promo-card">
+              <img src="Assets/Images/3621794-removebg-preview.png" alt="Promo 4" />
+              <div class="promo-text">
+                <h2>Cashback hingga 25%</h2>
+                <p>Gunakan metode pembayaran tertentu dan dapatkan cashback spesial!</p>
+              </div>
+              <button type="button">Klaim Sekarang</button>
+            </div>
+
+            <div class="promo-card">
+              <img src="Assets/Images/Flashsale-removebg-preview.png" alt="Promo 5" />
+              <div class="promo-text">
+                <h2>Flash Sale Setiap Hari Senin Jam 11:00 - 15:00 !</h2>
+                <p>Dapatkan harga hemat untuk produk pilihan setiap jam 11:00 - 15:00.</p>
+              </div>
+              <button type="button">Lihat detailnya</button>
+            </div>
+
+            <div class="promo-card">
+              <img src="Assets/Images/Diskon10_-removebg-preview.png" alt="Promo 6" />
+              <div class="promo-text">
+                <h2>Diskon 10% untuk Pengguna Baru</h2>
+                <p>Dapatkan diskon 10% untuk transaksi pertama cukup registrasi akun</p>
+              </div>
+              <button type="button">Lihat caranya</button>
+            </div>
+          </section>
+        </main>
+      </div>
+    </section>
+
+    <section id="tentang-kami" class="page-section">
+      <div class="tentang-kami">
+        <div class="text-with-images">
+          <img src="Assets/Images/people-watching-breaking-news-phone_23-2148625435.avif" alt="Gambar Kiri" class="side-image" />
+
+          <div class="main-text">
+            <h1>Siapa Kami</h1>
+            <p>V-Phone hadir untuk menjadi tempat terpercaya untuk pembelian smartphone. Kami membantu orang mewujudkan keinginan mereka. Kami selalu mengutamakan untuk memberikan produk berkualitas dan layanan terbaik.</p>
+          </div>
+
+          <img src="Assets/Images/orang-orang_berpikir_tanda_tanya_berpikir_-removebg-preview.png" alt="Gambar Kanan" class="side-image" />
+        </div>
+
+        <div class="grid-box">
+          <div class="card">
+            <h2>Visi Kami</h2>
+            <p>Meningkatkan cara hidup manusia dengan menciptakan layanan inovatif dan menghadirkan kemudahan dan kepercayaan dalam bertransaksi.</p>
+          </div>
+          <div class="card">
+            <h2>Misi Kami</h2>
+            <p>Meningkatkan cara hidup manusia dengan menciptakan layanan inovatif dan menghadirkan kemudahan dan kepercayaan dalam bertransaksi.</p>
+          </div>
+        </div>
+
+        <section class="pendekatan">
+          <div class="pendekatan-item">
+            <img src="Assets/Images/colleagues-working-together-project_23-2149286162.avif" alt="Pendekatan Kami" class="pendekatan-gambar" />
+
+            <div class="pendekatan-teks">
+              <h2>Pendekatan Kami</h2>
+              <p>V-Phone menyediakan ruang secara digital agar pengguna dapat membeli handphone dari berbagai merek dan kategori. Keamanan akun yang terjaga dengan baik, metode pembayaran yang aman, dan dukungan layanan pelanggan yang responsif, kami memastikan setiap transaksi berjalan lancar dan memuaskan.</p>
+            </div>
+          </div>
+
+          <div class="sejarah-item">
+            <div class="sejarah-teks">
+              <h2>Sejarah Kami</h2>
+              <p>V-Phone didirikan pada tahun 2020 sebagai solusi untuk beli handphone yang aman, mudah, dan terpercaya. Sejak saat itu, kami terus mengembangkan platform beli handphone secara online, karena kami berpikir dengan beli handphone secara online akan jauh lebih memudahkan orang, terutama pada zaman covid dimana orang tidak dapat berinteraksi satu sama lain.</p>
+            </div>
+            <img src="Assets/Images/online business internet background.jpeg" alt="Sejarah Kami" class="sejarah-gambar" />
+          </div>
+        </section>
+
+        <section class="kontak-box">
+          <div class="kontak">
+            <div>
+              <h4>Support Hours :</h4>
+              <p>Senin - Jumat (06.00 - 23.00)</p>
+              <p>Sabtu - Minggu & Hari Libur (05.00 - 24.00)</p>
+            </div>
+            <div>
+              <h4>Contacts :</h4>
+              <p>Email : Vphone@gmail.com</p>
+              <p>Nomor telepon : 0852-1672-5890 (WhatsApp)</p>
+            </div>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="registrasi" class="page-section">
+      <div class="container">
+        <h2>REGISTRASI</h2>
+        <form id="form-registrasi">
+          <div class="form-group input-wrapper">
+            <label for="nama">Nama</label>
+            <input type="text" id="nama" name="nama" placeholder="Masukkan Nama" />
+            <div id="popup-nama" class="autocomplete-popup"></div>
+            <div id="error-nama" class="error"></div>
+          </div>
+
+          <div class="form-group">
+            <label>Gender</label>
+            <div class="gender-group">
+              <label class="gender-option">
+                <input type="radio" name="gender" value="laki-laki" />
+                <span>Laki-laki</span>
+              </label>
+              <label class="gender-option">
+                <input type="radio" name="gender" value="perempuan" />
+                <span>Perempuan</span>
+              </label>
+            </div>
+            <div class="error" id="error-gender"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" placeholder="Masukkan Email" />
+            <div class="error" id="error-email"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="password">Kata Sandi</label>
+            <input type="password" id="password" name="password" placeholder="Masukkan Password" />
+            <div class="error" id="error-password"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="konfirmasi">Konfirmasi Kata Sandi</label>
+            <input type="password" id="konfirmasi" name="konfirmasi" placeholder="Masukkan Konfirmasi Password" />
+            <div class="error" id="error-konfirmasi"></div>
+          </div>
+
+          <button class="btn-submit" type="submit">Berikutnya</button>
+        </form>
+
+        <div class="login-link">
+          Sudah punya akun? <a href="#home" class="login-underline">Login</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const slides = document.querySelector('.slides');
+    const totalSlides = document.querySelectorAll('.slide').length;
+    let currentSlide = 0;
+
+    function updateSlidePosition() {
+      const slideHeight = document.querySelector('.slide').clientHeight;
+      slides.style.transform = `translateY(-${currentSlide * slideHeight}px)`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const upButton = document.querySelector('.arrow.up');
+      const downButton = document.querySelector('.arrow.down');
+
+      if (upButton) {
+        upButton.addEventListener('click', () => {
+          currentSlide = (currentSlide - 1 + totalSlides) % totalSlides;
+          updateSlidePosition();
+        });
+      }
+
+      if (downButton) {
+        downButton.addEventListener('click', () => {
+          currentSlide = (currentSlide + 1) % totalSlides;
+          updateSlidePosition();
+        });
+      }
+
+      window.addEventListener('resize', updateSlidePosition);
+      updateSlidePosition();
+    });
+
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.getElementById('form-registrasi');
+
+      function isValidName(name) {
+        for (let i = 0; i < name.length; i++) {
+          const char = name[i];
+          const code = char.charCodeAt(0);
+          if (code === 32) continue;
+          if (code >= 65 && code <= 90) continue;
+          if (code >= 97 && code <= 122) continue;
+          return false;
+        }
+        return true;
+      }
+
+      function showError(id, message) {
+        const el = document.getElementById(id);
+        if (el) el.textContent = message;
+      }
+
+      function clearErrors() {
+        const errors = document.querySelectorAll('.error');
+        errors.forEach((e) => {
+          e.textContent = '';
+        });
+        const popupNama = document.getElementById('popup-nama');
+        if (popupNama) popupNama.style.display = 'none';
+      }
+
+      const namaInput = document.getElementById('nama');
+      const popupNama = document.getElementById('popup-nama');
+
+      if (namaInput) {
+        namaInput.addEventListener('input', function () {
+          if (namaInput.value.length > 0 && !isValidName(namaInput.value)) {
+            popupNama.textContent = 'Nama hanya boleh berisi huruf dan spasi.';
+            popupNama.style.display = 'block';
+          } else {
+            popupNama.style.display = 'none';
+          }
+        });
+      }
+
+      form.addEventListener('submit', function (event) {
+        event.preventDefault();
+
+        const nama = namaInput.value.trim();
+        const email = document.getElementById('email').value.trim();
+        const password = document.getElementById('password').value;
+        const konfirmasi = document.getElementById('konfirmasi').value;
+        const genderChecked = document.querySelector('input[name="gender"]:checked');
+
+        clearErrors();
+        let valid = true;
+
+        if (!nama) {
+          showError('error-nama', 'Nama wajib diisi.');
+          valid = false;
+        } else if (!isValidName(nama)) {
+          popupNama.textContent = 'Nama hanya boleh berisi huruf dan spasi.';
+          popupNama.style.display = 'block';
+          valid = false;
+        }
+
+        if (!genderChecked) {
+          showError('error-gender', 'Pilih jenis kelamin.');
+          valid = false;
+        }
+
+        if (!email.includes('@') || !email.includes('.')) {
+          showError('error-email', 'Email tidak valid.');
+          valid = false;
+        }
+
+        if (password.length < 6) {
+          showError('error-password', 'Password minimal 6 karakter.');
+          valid = false;
+        }
+
+        if (password !== konfirmasi) {
+          showError('error-konfirmasi', 'Konfirmasi tidak cocok dengan password.');
+          valid = false;
+        }
+
+        if (valid) {
+          alert('Registrasi berhasil!');
+          form.reset();
+          window.location.hash = '#home';
+        }
+      });
+    });
+
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach((link) => {
+      link.addEventListener('click', () => {
+        navLinks.forEach((item) => item.classList.remove('active'));
+        link.classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>

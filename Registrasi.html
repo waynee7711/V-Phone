@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Form Registrasi - V Phone</title>
+  <link rel="stylesheet" href="Registrasi.css" />
+</head>
+<body>
+  <div class="container">
+    <h2>REGISTRASI</h2>
+    <form id="form-registrasi">
+
+      <div class="form-group input-wrapper">
+        <label for="nama">Nama</label>
+        <input type="text" id="nama" name="nama" placeholder="Masukkan Nama"/>
+        <div id="popup-nama" class="autocomplete-popup"></div>
+        <div id="error-nama" class="error"></div>
+      </div>
+
+      <!-- Gender -->
+      <div class="form-group">
+        <label>Gender</label>
+      <div class="gender-group">
+        <label class="gender-option">
+        <input type="radio" name="gender" value="laki-laki" />
+        <span>Laki-laki</span>
+        </label>
+        <label class="gender-option">
+        <input type="radio" name="gender" value="perempuan" />
+        <span>Perempuan</span>
+        </label>
+      </div>
+    <div class="error" id="error-gender"></div>
+  </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email" placeholder="Masukkan Email" />
+        <div class="error" id="error-email"></div>
+      </div>
+
+      <!-- Kata Sandi -->
+      <div class="form-group">
+        <label for="password">Kata Sandi</label>
+        <input type="password" id="password" name="password" placeholder="Masukkan Password" />
+        <div class="error" id="error-password"></div>
+      </div>
+      
+      <!-- Konfirmasi Kata Sandi -->
+      <div class="form-group">
+        <label for="konfirmasi">Konfirmasi Kata Sandi</label>
+        <input type="password" id="konfirmasi" name="konfirmasi" placeholder="Masukkan Konfirmasi Password" />
+        <div class="error" id="error-konfirmasi"></div>
+      </div>
+
+      <!-- Tombol Berikutnya -->
+      <button class="btn" type="submit">Berikutnya</button>
+    </form>
+    
+    <!-- Pilihan login jika sudah punya akun -->
+    <div class="login-link">
+      Sudah punya akun? <a href="#" class="login-underline">Login</a>
+    </div>
+  </div>
+
+  <script src="Registrasi.js"></script>
+</body>
+</html>
