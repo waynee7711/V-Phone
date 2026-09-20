@@ -1,4 +1,4 @@
-#[V-Phone](https://waynee7711.github.io/V-Phone/)
+[V-Phone](https://waynee7711.github.io/V-Phone/)
 
 V-Phone adalah website landing page dan katalog produk smartphone yang dirancang untuk menampilkan berbagai jenis ponsel, promo menarik, informasi brand, serta form registrasi pengguna. Website ini dibuat dengan pendekatan modern dan sederhana, cocok untuk kebutuhan showcase produk teknologi.
 
