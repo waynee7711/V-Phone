@@ -6,15 +6,6 @@ V-Phone adalah website landing page dan katalog produk smartphone yang dirancang
 
 Website ini menampilkan brand V-Phone sebagai toko ponsel digital yang menyediakan berbagai macam produk mulai dari smartphone dengan fokus gaming, kamera, hingga model dengan harga terjangkau. Pengguna dapat melihat daftar produk, promo yang sedang berlangsung, informasi perusahaan, dan melakukan registrasi akun.
 
-## Fitur Utama
-
-- Halaman utama dengan slider produk yang menarik
-- Katalog produk smartphone dengan tampilan card-based layout
-- Promo dan diskon untuk menarik minat pelanggan
-- Halaman tentang kami yang menjelaskan visi, misi, dan sejarah brand
-- Form registrasi pengguna dengan validasi input
-- Desain responsif dan tampilan yang bersih untuk pengalaman browsing yang nyaman
-
 ## Halaman yang Tersedia
 
 - Home / Homepage
@@ -54,22 +45,6 @@ V-Phone/
 ├── index.html
 └── README.md
 ```
-
-## Cara Menjalankan
-
-1. Clone repository ini ke komputer Anda.
-2. Buka folder project.
-3. Jalankan file `index.html` di browser, atau gunakan ekstensi Live Server di VS Code.
-
-Contoh:
-
-```bash
-git clone <link-repository-anda>
-cd V-Phone
-```
-
-Lalu buka file `index.html` di browser Anda.
-
 ## Tujuan Project
 
 Project ini dibuat sebagai implementasi website e-commerce / landing page untuk brand smartphone dengan fokus pada user experience, visible product catalog, dan desain yang modern serta mudah dipahami.
@@ -84,10 +59,3 @@ Website ini masih bersifat frontend/static dan belum terhubung ke database atau 
 - database produk
 - admin dashboard
 
-## Lisensi
-
-Project ini dibuat untuk kebutuhan pembelajaran dan pengembangan website frontend. Silakan gunakan sesuai kebutuhan Anda.
-
-## Pembuat
-
-V-Phone Website Project
